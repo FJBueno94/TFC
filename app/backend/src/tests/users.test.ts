@@ -1,7 +1,8 @@
+// @ts-ignore
 import { app } from '../app';
 import * as Sinon from 'sinon';
 import * as chai from 'chai';
-import chaiHttp from 'chai-http';
+import chaiHttp = require('chai-http');
 import { Response } from 'superagent'
 import Users from '../database/models/user.model';
 
@@ -32,13 +33,13 @@ describe('/POST', () => {
       expect(chaiHttpResponse).to.have.property('token');
     });
 
-    it('valida login como falha', async () => {
+    it('valida login como credenciais invalidas', async () => {
       chaiHttpResponse = await chai.request(app).post('/login').send({
         email: 'test',
         password: '123',
       });
 
-      expect(chaiHttpResponse).to.have.status(422);
+      expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse).to.have.property('error');
     });
   }) 
