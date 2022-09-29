@@ -1,6 +1,6 @@
 import { app } from '../app';
-import Sinon from 'sinon';
-import chai from 'chai';
+import * as Sinon from 'sinon';
+import * as chai from 'chai';
 import chaiHttp from 'chai-http';
 import { Response } from 'superagent'
 import Users from '../database/models/user.model';
@@ -20,7 +20,7 @@ describe('/POST', () => {
     });
 
     after(() => {
-      Sinon.restore();
+      (Users.findOne as Sinon.SinonStub).restore();
     });
 
     it('Valida login como sucesso', async () => {
