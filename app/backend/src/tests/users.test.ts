@@ -52,5 +52,15 @@ describe('/POST', () => {
       expect(chaiHttpResponse).to.have.status(400);
       expect(chaiHttpResponse).to.have.property('error');
     });
+
+    it('valida login com credenciais não existentes', async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send({
+        email: 'teste@teste.com',
+        password: '123456',
+      });
+
+      expect(chaiHttpResponse).to.have.status(401);
+      expect(chaiHttpResponse).to.have.property('error');
+    });
   }) 
 });

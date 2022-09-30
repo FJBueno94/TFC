@@ -13,11 +13,11 @@ export default class User {
       raw: true,
     }) as IUser;
     if (!result) {
-      throw new Error('Invalid username or password');
+      throw new Error('Incorrect email or password');
     }
     const isValid = validatePassword(password, result.password);
     if (!isValid) {
-      throw new Error('Invalid password');
+      throw new Error('Incorrect email or password');
     }
     const token = createToken(result);
     return token as unknown as IToken;
