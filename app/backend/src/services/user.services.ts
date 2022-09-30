@@ -1,7 +1,7 @@
 import IToken from '../interfaces/IToken';
 import UserModel from '../database/models/user.model';
 import IUser from '../interfaces/IUser';
-import createToken from '../helpers/token';
+import Token from '../helpers/token';
 import validatePassword from '../helpers/bcrypt';
 
 export default class User {
@@ -19,7 +19,18 @@ export default class User {
     if (!isValid) {
       throw new Error('Incorrect email or password');
     }
-    const token = createToken(result);
+    const token = Token.createToken(result);
     return token as unknown as IToken;
+  };
+
+  public getUser = async (email: string): Promise<IUser> => {
+    const result = await this.model.findOne({
+      where: { email },
+      raw: true,
+    }) as IUser;
+    if (!result) {
+      throw new Error('User not found');
+    }
+    return result.role as unknown as IUser;
   };
 }
