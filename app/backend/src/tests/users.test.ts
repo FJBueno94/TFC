@@ -26,8 +26,8 @@ describe('/POST', () => {
 
     it('Valida login como sucesso', async () => {
       chaiHttpResponse = await chai.request(app).post('/login').send({
-        email: 'teste2@teste.com',
-        password: '123123',
+        email: 'admin@admin.com',
+        password: 'secret_admin',
       });
       expect(chaiHttpResponse).to.have.status(200);
       expect(chaiHttpResponse).to.have.property('token');
@@ -37,6 +37,16 @@ describe('/POST', () => {
       chaiHttpResponse = await chai.request(app).post('/login').send({
         email: 'test',
         password: '123',
+      });
+
+      expect(chaiHttpResponse).to.have.status(400);
+      expect(chaiHttpResponse).to.have.property('error');
+    });
+
+    it('valida login sem credenciais', async () => {
+      chaiHttpResponse = await chai.request(app).post('/login').send({
+        email: '',
+        password: '',
       });
 
       expect(chaiHttpResponse).to.have.status(400);
