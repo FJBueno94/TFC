@@ -13,6 +13,7 @@ class App {
     this.app.get('/', (req, res) => res.json({ ok: true }));
     this.app.use('/login', Router.userRouter);
     this.app.use('/teams', Router.teamRouter);
+    this.app.use('/matches', Router.matchRouter);
   }
 
   private config():void {
