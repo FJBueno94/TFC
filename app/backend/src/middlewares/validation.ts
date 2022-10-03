@@ -12,7 +12,7 @@ const loginValidation = async (req: Request, res: Response, next: NextFunction) 
   if (password.length < 6) {
     return res.status(400).json({ message: 'A minimum 6 characters "password" is required' });
   }
-  next();
+  return next();
 };
 
 export default {

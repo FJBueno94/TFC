@@ -6,7 +6,8 @@ export default class Match {
 
   public getMatches = async (req: Request, res: Response) => {
     try {
-      const result = await this.matchServices.getMatches();
+      const { inProgress } = req.query;
+      const result = await this.matchServices.getMatches(inProgress as string);
       return res.status(200).json(result);
     } catch (error) {
       const err = error as Error;
