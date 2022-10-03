@@ -9,10 +9,10 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('/GET', () => {
+describe('/TEAMS', () => {
   let chaiHttpResponse: Response;
 
-  describe('/TEAMS', () => {
+  describe('FINDALL', () => {
     
     before(async () => {
       chaiHttpResponse = await chai.request(app).get('/teams');
@@ -26,7 +26,7 @@ describe('/GET', () => {
     });
   });
 
-  describe('/TEAMS/:ID', () => {
+  describe('FINDBYID', () => {
     before(async () => {
       chaiHttpResponse = await chai
       .request(app)
