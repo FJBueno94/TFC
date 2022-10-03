@@ -7,10 +7,10 @@ const loginValidation = async (req: Request, res: Response, next: NextFunction) 
     return res.status(400).json({ message: 'All fields must be filled' });
   }
   if (valid.test(email) === false) {
-    res.status(400).json({ message: 'Valid "email" is required' });
+    return res.status(400).json({ message: 'Valid "email" is required' });
   }
-  if (password.length < 6 || !password) {
-    res.status(400).json({ message: 'A minimum 6 characters "password" is required' });
+  if (password.length < 6) {
+    return res.status(400).json({ message: 'A minimum 6 characters "password" is required' });
   }
   next();
 };

@@ -9,9 +9,11 @@ const tokenAuth = (req: IRequest, res: Response, next: NextFunction) => {
   }
   try {
     const dataToken = Token.verifyToken(authorization);
-    const { email } = dataToken as IRequest;
-    req.email = email as unknown as IRequest;
-    next();
+    if (dataToken) {
+      const { email } = dataToken as IRequest;
+      req.email = email as unknown as IRequest;
+      next();
+    }
   } catch (error) {
     return res.status(401).json({ message: 'Expired or invalid token' });
   }
