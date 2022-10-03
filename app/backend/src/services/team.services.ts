@@ -13,4 +13,14 @@ export default class Team {
     }
     return result;
   };
+
+  public getTeamById = async (id: number): Promise<ITeams> => {
+    const result = await this.model.findByPk(id, {
+      raw: true,
+    }) as ITeams;
+    if (!result) {
+      throw new Error('No Team found');
+    }
+    return result;
+  };
 }
