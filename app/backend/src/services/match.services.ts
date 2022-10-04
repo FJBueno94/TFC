@@ -27,4 +27,9 @@ export default class Matches {
     const result = await this.model.create(match);
     return result;
   };
+
+  public updateMatch = async (id: number): Promise<IMatches> => {
+    const result = await this.model.update({ inProgress: 0 }, { where: { id } });
+    return result as unknown as IMatches;
+  };
 }

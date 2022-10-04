@@ -25,4 +25,15 @@ export default class Match {
       return res.status(401).json({ message: err.message });
     }
   };
+
+  public updateMatch = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      await this.matchServices.updateMatch(Number(id));
+      return res.status(200).json({ message: 'Finished' });
+    } catch (error) {
+      const err = error as Error;
+      return res.status(401).json({ message: err.message });
+    }
+  };
 }
