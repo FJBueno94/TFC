@@ -22,7 +22,7 @@ export default class Match {
       return res.status(201).json(result);
     } catch (error) {
       const err = error as Error;
-      return res.status(401).json({ message: err.message });
+      return res.status(404).json({ message: err.message });
     }
   };
 

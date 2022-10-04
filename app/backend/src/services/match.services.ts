@@ -24,6 +24,10 @@ export default class Matches {
   };
 
   public createMatch = async (match: IMatches): Promise<IMatches> => {
+    const { homeTeam, awayTeam } = match;
+    const home = await TeamsModel.findOne({ where: { id: homeTeam } });
+    const away = await TeamsModel.findOne({ where: { id: awayTeam } });
+    if (!home || !away) { throw new Error('There is no team with such id!'); }
     const result = await this.model.create(match);
     return result;
   };
