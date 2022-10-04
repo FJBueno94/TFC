@@ -32,8 +32,13 @@ export default class Matches {
     return result;
   };
 
-  public updateMatch = async (id: number): Promise<IMatches> => {
+  public finishMatch = async (id: number): Promise<IMatches> => {
     const result = await this.model.update({ inProgress: 0 }, { where: { id } });
+    return result as unknown as IMatches;
+  };
+
+  public updateMatch = async (id: number, match: IMatches): Promise<IMatches> => {
+    const result = await this.model.update(match, { where: { id } });
     return result as unknown as IMatches;
   };
 }
