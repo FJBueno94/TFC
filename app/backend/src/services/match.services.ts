@@ -22,4 +22,9 @@ export default class Matches {
     if (!matches) { throw new Error('No Matches found'); }
     return matches;
   };
+
+  public createMatch = async (match: IMatches): Promise<IMatches> => {
+    const result = await this.model.create(match);
+    return result;
+  };
 }
