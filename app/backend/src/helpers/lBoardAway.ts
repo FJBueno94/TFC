@@ -73,10 +73,10 @@ const getAwayGoalsBalance = async (result: ILBoard) => {
 };
 
 const getAwayEfficiency = async (result: ILBoard) => {
-  const totalGames = await getAwayTotalGames(result);
-  const totalPoints = await getAwayTotalPoints(result);
+  const totalGames = await getAwayTotalGames(result) as number;
+  const totalPoints = await getAwayTotalPoints(result) as number;
   const efficiency = ((await totalPoints / (await totalGames * 3)) * 100).toFixed(2);
-  return efficiency;
+  return efficiency as unknown as number;
 };
 
 export {

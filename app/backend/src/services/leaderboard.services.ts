@@ -7,6 +7,9 @@ import { getHomeTotalPoints, getHomeTotalGames, getHomeVictories,
 import { getAwayTotalPoints, getAwayTotalGames, getAwayVictories,
   getAwayDraws, getAwayLosses, getAwayGoalsFavor, getAwayGoalsOwn,
   getAwayGoalsBalance, getAwayEfficiency } from '../helpers/lBoardAway';
+import { getTotalPoints, getTotalGames, getTotalVictories, getTotalDraws,
+  getTotalLosses, getGoalsFavor, getGoalsOwn, getGoalsBalance, getEfficiency,
+} from '../helpers/lBoard';
 
 const sort = async (result: ILeaderboard[]) => (await result).sort((a, b) => b
   .totalPoints - a.totalPoints
@@ -76,6 +79,45 @@ export default class Leaderboard {
       goalsOwn: await getAwayGoalsOwn(team),
       goalsBalance: await getAwayGoalsBalance(team),
       efficiency: await getAwayEfficiency(team),
+    }))));
+
+    const result = sort(response as unknown as ILeaderboard[]);
+    return result as unknown as ILeaderboard[];
+  };
+
+  public getLeaderboard = async (): Promise<TeamModel[]> => {
+    const leaderboard = await this.model.findAll({
+      include: [
+        {
+          model: MatchModel,
+          association: 'teamHome',
+          where: { inProgress: 0 },
+          attributes: ['homeTeamGoals', 'awayTeamGoals'],
+        },
+        {
+          model: MatchModel,
+          association: 'teamAway',
+          where: { inProgress: 0 },
+          attributes: ['homeTeamGoals', 'awayTeamGoals'],
+        },
+      ],
+    });
+    return leaderboard;
+  };
+
+  public getMatches = async (): Promise<ILeaderboard[]> => {
+    const leaderboard = await this.getLeaderboard();
+    const response = (Promise.all(leaderboard.map(async (team) => ({
+      name: team.teamName,
+      totalPoints: await getTotalPoints(team),
+      totalGames: await getTotalGames(team),
+      totalVictories: await getTotalVictories(team),
+      totalDraws: await getTotalDraws(team),
+      totalLosses: await getTotalLosses(team),
+      goalsFavor: await getGoalsFavor(team),
+      goalsOwn: await getGoalsOwn(team),
+      goalsBalance: await getGoalsBalance(team),
+      efficiency: await getEfficiency(team),
     }))));
 
     const result = sort(response as unknown as ILeaderboard[]);
