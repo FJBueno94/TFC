@@ -1,6 +1,6 @@
-import IHome from '../interfaces/IHome';
+import ILBoard from '../interfaces/ILBoardHelper';
 
-const getTotalPoints = async (result: IHome) => {
+const getHomeTotalPoints = async (result: ILBoard) => {
   let totalPoints = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     if (team.homeTeamGoals > team.awayTeamGoals) {
@@ -12,13 +12,13 @@ const getTotalPoints = async (result: IHome) => {
   return totalPoints;
 };
 
-const getTotalGames = async (result: IHome) => {
+const getHomeTotalGames = async (result: ILBoard) => {
   let totalGames = 0;
   totalGames += result.teamHome.length;
   return totalGames;
 };
 
-const getVictories = async (result: IHome) => {
+const getHomeVictories = async (result: ILBoard) => {
   let totalVictories = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     if (team.homeTeamGoals > team.awayTeamGoals) {
@@ -28,7 +28,7 @@ const getVictories = async (result: IHome) => {
   return totalVictories;
 };
 
-const getDraws = async (result: IHome) => {
+const getHomeDraws = async (result: ILBoard) => {
   let totalDraws = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     if (team.homeTeamGoals === team.awayTeamGoals) {
@@ -38,7 +38,7 @@ const getDraws = async (result: IHome) => {
   return totalDraws;
 };
 
-const getLosses = async (result: IHome) => {
+const getHomeLosses = async (result: ILBoard) => {
   let totalLosses = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     if (team.homeTeamGoals < team.awayTeamGoals) {
@@ -48,7 +48,7 @@ const getLosses = async (result: IHome) => {
   return totalLosses;
 };
 
-const getGoalsFavor = async (result: IHome) => {
+const getHomeGoalsFavor = async (result: ILBoard) => {
   let goalsFavor = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     goalsFavor += team.homeTeamGoals;
@@ -56,7 +56,7 @@ const getGoalsFavor = async (result: IHome) => {
   return goalsFavor;
 };
 
-const getGoalsOwn = async (result: IHome) => {
+const getHomeGoalsOwn = async (result: ILBoard) => {
   let goalsOwn = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     goalsOwn += team.awayTeamGoals;
@@ -64,7 +64,7 @@ const getGoalsOwn = async (result: IHome) => {
   return goalsOwn;
 };
 
-const getGoalsBalance = async (result: IHome) => {
+const getHomeGoalsBalance = async (result: ILBoard) => {
   let goalsBalance = 0;
   result.teamHome.forEach((team: { homeTeamGoals: number, awayTeamGoals: number }) => {
     goalsBalance += team.homeTeamGoals - team.awayTeamGoals;
@@ -72,21 +72,21 @@ const getGoalsBalance = async (result: IHome) => {
   return goalsBalance;
 };
 
-const getEfficiency = async (result: IHome) => {
-  const totalGames = await getTotalGames(result);
-  const totalPoints = await getTotalPoints(result);
-  const efficiency = ((await totalPoints / (await totalGames * 3)) * 100).toFixed(2);
+const getHomeEfficiency = async (result: ILBoard) => {
+  const totalGames = await getHomeTotalGames(result);
+  const totalPoints = await getHomeTotalPoints(result);
+  const efficiency = ((totalPoints / (totalGames * 3)) * 100).toFixed(2);
   return efficiency;
 };
 
 export {
-  getTotalPoints,
-  getTotalGames,
-  getVictories,
-  getDraws,
-  getLosses,
-  getGoalsFavor,
-  getGoalsOwn,
-  getGoalsBalance,
-  getEfficiency,
+  getHomeTotalPoints,
+  getHomeTotalGames,
+  getHomeVictories,
+  getHomeDraws,
+  getHomeLosses,
+  getHomeGoalsFavor,
+  getHomeGoalsOwn,
+  getHomeGoalsBalance,
+  getHomeEfficiency,
 };
